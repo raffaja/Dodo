@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAYMENT BY RAFFSTR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: #121212;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2a2a2a;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            font-size: 32px;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .logo p {
+            color: #bbb;
+            margin-top: 5px;
+        }
+        
+        .payment-option {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #2a2a2a;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .payment-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #fff, #555);
+        }
+        
+        .payment-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
+        }
+        
+        .payment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(145deg, #2c2c2c, #000);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-weight: bold;
+            border: 1px solid #444;
+        }
+        
+        .payment-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .payment-details {
+            background-color: #151515;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #2a2a2a;
+        }
+        
+        .payment-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .payment-info:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-label {
+            color: #999;
+        }
+        
+        .info-value {
+            font-weight: 600;
+            color: #fff;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #bbb;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            background-color: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #555;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(145deg, #333, #000);
+            color: white;
+            border: 1px solid #444;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(145deg, #000, #333);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: linear-gradient(145deg, #2ecc71, #27ae60);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(145deg, #27ae60, #2ecc71);
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: linear-gradient(145deg, #c0392b, #e74c3c);
+            transform: translateY(-2px);
+        }
+        
+        .status {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: none;
+            background-color: #1a1a1a;
+            border: 1px solid #2a2a2a;
+        }
+        
+        .success {
+            background-color: rgba(46, 204, 113, 0.1);
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
+            display: block;
+        }
+        
+        .error {
+            background-color: rgba(231, 76, 60, 0.1);
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+            display: block;
+        }
+        
+        .whatsapp-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(145deg, #25D366, #128C7E);
+            color: white;
+            text-decoration: none;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #444, transparent);
+            margin: 25px 0;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #333;
+            z-index: 1;
+        }
+        
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step.active {
+            background: linear-gradient(145deg, #fff, #999);
+            color: #000;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>PAYMENT BY RAFFSTR</h1>
+            <p>Lakukan pembayaran dengan mudah dan aman</p>
+        </div>
+        
+        <div class="steps">
+            <div class="step active">1</div>
+            <div class="step">2</div>
+            <div class="step">3</div>
+        </div>
+        
+        <div class="payment-option">
+            <div class="payment-header">
+                <div class="payment-icon">D</div>
+                <div class="payment-title">DANA</div>
+            </div>
+            <div class="payment-details">
+                <div class="payment-info">
+                    <span class="info-label">Nomor:</span>
+                    <span class="info-value">083867468118</span>
+                </div>
+                <div class="payment-info">
+                    <span class="info-label">Nama:</span>
+                    <span class="info-value">Lip</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="payment-option">
+            <div class="payment-header">
+                <div class="payment-icon">G</div>
+                <div class="payment-title">GOPAY</div>
+            </div>
+            <div class="payment-details">
+                <div class="payment-info">
+                    <span class="info-label">Nomor:</span>
+                    <span class="info-value">083893476377</span>
+                </div>
+                <div class="payment-info">
+                    <span class="info-label">Nama:</span>
+                    <span class="info-value">RAFFSTR</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="form-group">
+            <label for="phone"><i class="fas fa-phone"></i> Masukkan Nomor Telepon Anda</label>
+            <input type="tel" id="phone" class="form-control" placeholder="Contoh: 081234567890">
+        </div>
+        
+        <div class="form-group">
+            <label for="amount"><i class="fas fa-money-bill-wave"></i> Nominal Transfer</label>
+            <input type="number" id="amount" class="form-control" placeholder="Masukkan jumlah transfer">
+        </div>
+        
+        <button id="confirmBtn" class="btn btn-primary">Konfirmasi Pembayaran</button>
+        
+        <div class="divider"></div>
+        
+        <div id="paymentStatus" class="status hidden">
+            Status pembayaran akan muncul di sini
+        </div>
+        
+        <button id="failBtn" class="btn btn-danger">Pembayaran Gagal ❌</button>
+        <button id="payBtn" class="btn btn-primary">Bayar</button>
+        <button id="successBtn" class="btn btn-success">Pembayaran Sukses ✅</button>
+        
+        <a id="whatsappBtn" href="https://wa.me/6283893476377" class="whatsapp-btn hidden" target="_blank">
+            <i class="fab fa-whatsapp"></i> Ketuk untuk ke WA
+        </a>
+        
+        <div class="footer">
+            &copy; 2023 Payment Gateway - Semua transaksi dilindungi
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const confirmBtn = document.getElementById('confirmBtn');
+            const failBtn = document.getElementById('failBtn');
+            const payBtn = document.getElementById('payBtn');
+            const successBtn = document.getElementById('successBtn');
+            const paymentStatus = document.getElementById('paymentStatus');
+            const whatsappBtn = document.getElementById('whatsappBtn');
+            const steps = document.querySelectorAll('.step');
+            
+            confirmBtn.addEventListener('click', function() {
+                const phone = document.getElementById('phone').value;
+                const amount = document.getElementById('amount').value;
+                
+                if (!phone || !amount) {
+                    paymentStatus.textContent = 'Harap isi nomor telepon dan nominal transfer!';
+                    paymentStatus.className = 'status error';
+                    return;
+                }
+                
+                paymentStatus.textContent = `Konfirmasi pembayaran: Transfer Rp ${amount} dari nomor ${phone}`;
+                paymentStatus.className = 'status';
+                
+                // Update steps
+                steps[0].classList.remove('active');
+                steps[1].classList.add('active');
+            });
+            
+            failBtn.addEventListener('click', function() {
+                paymentStatus.textContent = 'Pembayaran gagal! Silakan coba lagi.';
+                paymentStatus.className = 'status error';
+                whatsappBtn.classList.add('hidden');
+                
+                // Reset steps
+                steps[1].classList.remove('active');
+                steps[2].classList.remove('active');
+                steps[0].classList.add('active');
+            });
+            
+            payBtn.addEventListener('click', function() {
+                const phone = document.getElementById('phone').value;
+                const amount = document.getElementById('amount').value;
+                
+                if (!phone || !amount) {
+                    paymentStatus.textContent = 'Harap isi nomor telepon dan nominal transfer terlebih dahulu!';
+                    paymentStatus.className = 'status error';
+                    return;
+                }
+                
+                paymentStatus.textContent = 'Memproses pembayaran...';
+                paymentStatus.className = 'status';
+                
+                // Update steps
+                steps[1].classList.remove('active');
+                steps[2].classList.add('active');
+                
+                setTimeout(function() {
+                    paymentStatus.textContent = 'Silakan selesaikan pembayaran di aplikasi e-wallet Anda.';
+                    paymentStatus.className = 'status';
+                }, 2000);
+            });
+            
+            successBtn.addEventListener('click', function() {
+                paymentStatus.textContent = 'Pembayaran berhasil! Terima kasih.';
+                paymentStatus.className = 'status success';
+                whatsappBtn.classList.remove('hidden');
+                
+                // Update steps
+                steps[2].classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
